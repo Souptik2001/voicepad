@@ -1,0 +1,26 @@
+services:
+  voicepad:
+    build: .
+    image: voicepad:local
+    restart: unless-stopped
+    user: "${VOICEPAD_UID:-1000}:${VOICEPAD_GID:-1000}"
+    ports:
+      - "127.0.0.1:${VOICEPAD_PORT:-8791}:8791"
+    read_only: true
+    tmpfs:
+      - "/tmp:rw,noexec,nosuid,size=64m,uid=${VOICEPAD_UID:-1000},gid=${VOICEPAD_GID:-1000},mode=1700"
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    cpus: 2
+    pids_limit: 64
+    environment:
+      VOICEPAD_STATE_DIR: /data
+      VOICEPAD_PUBLIC_ORIGIN: ${VOICEPAD_PUBLIC_ORIGIN:-http://localhost:8791}
+    volumes:
+      - type: bind
+        source: ${VOICEPAD_DATA_DIR:-./data}
+        target: /data
+        read_only: false
+        bind:
+          create_host_path: false

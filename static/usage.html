@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Measured Voicepad activity, not estimated subscription usage.">
+  <title>Voicepad — Usage</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./usage.mjs"></script>
+</head>
+<body>
+  <div class="shell usage-shell">
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Voicepad home"><span class="brand-mark" aria-hidden="true">v.</span>Voicepad</a>
+      <nav class="masthead-links" aria-label="Main navigation"><a class="badge admin-link" href="./">Your words</a><a class="badge admin-link" href="./admin">Administration</a></nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">A LITTLE PERSPECTIVE ON YOUR USAGE</p>
+        <h1 id="title">Your words. <em>In numbers.</em></h1>
+        <p class="subtitle">Activity measured by this Voicepad server.<br>Not your OpenAI subscription balance.</p>
+      </section>
+      <section class="usage-quota" aria-labelledby="quota-title">
+        <div><p class="eyebrow">PROVIDER QUOTA</p><h2 id="quota-title">Unknown, not zero.</h2><p id="quota-note">OpenAI does not report token, subscription quota or cost usage for this endpoint.</p></div>
+        <dl class="quota-values"><div><dt>Tokens</dt><dd id="quota-tokens">Unknown</dd></div><div><dt>Subscription used</dt><dd id="quota-subscription">Unknown</dd></div><div><dt>Cost (USD)</dt><dd id="quota-cost">Unknown</dd></div></dl>
+      </section>
+      <div class="usage-toolbar">
+        <div class="period-control" role="group" aria-label="Usage period"><button id="period-today" class="button" type="button" aria-pressed="true">Today</button><button id="period-all" class="button" type="button" aria-pressed="false">All time</button></div>
+        <button id="usage-refresh" class="button dark" type="button">Refresh</button>
+      </div>
+      <section class="usage-overview" aria-labelledby="period-label">
+        <h2 id="period-label">Today · UTC</h2>
+        <dl class="usage-grid">
+          <div class="usage-stat usage-stat-featured"><dt>Submitted audio</dt><dd id="submitted-audio">—</dd><p>Per outbound attempt, including retries and failed calls.</p></div>
+          <div class="usage-stat usage-stat-featured"><dt>Successful audio</dt><dd id="successful-audio">—</dd><p>Audio counted once per successful request.</p></div>
+          <div class="usage-stat"><dt>Requests</dt><dd id="requests">—</dd><p>Accepted processing requests.</p></div>
+          <div class="usage-stat"><dt>Successful</dt><dd id="successful">—</dd><p>Completed successfully.</p></div>
+          <div class="usage-stat"><dt>Failed</dt><dd id="failed">—</dd><p>Processing errors.</p></div>
+          <div class="usage-stat"><dt>Provider calls</dt><dd id="provider-calls">—</dd><p>Outbound attempts, including 401 retries.</p></div>
+          <div class="usage-stat"><dt>Average processing</dt><dd id="avg-latency">—</dd><p>Successful server processing time ÷ successful requests.</p></div>
+          <div class="usage-stat"><dt>Maximum processing</dt><dd id="max-latency">—</dd><p>Longest successful server processing time.</p></div>
+        </dl>
+        <p class="usage-explainer">Processing latency is server-side, not total recording time or end-to-end device latency. A request can make more than one provider call after a 401 retry; calls are not unique recordings.</p>
+        <p class="usage-last">Last accepted request: <span id="last-request">—</span></p>
+      </section>
+      <section class="usage-overview usage-formatting" aria-labelledby="formatting-title">
+        <p class="eyebrow">OPTIONAL TEXT FORMATTING</p>
+        <h2 id="formatting-title">Formatting · all time</h2>
+        <p class="usage-explainer">Always all time since formatting tracking began, independent of the audio period selected above. Enabling formatting adds a Codex text-model call after transcription. This consumes model quota; measured tokens do not reveal an exact subscription percentage or balance. Formatting tokens are separate from audio usage, whose tokens and subscription percentage remain unknown.</p>
+        <dl class="usage-grid">
+          <div class="usage-stat"><dt>Provider calls</dt><dd id="formatting-provider-calls">Not available</dd><p>Formatting attempts, including 401 retries.</p></div>
+          <div class="usage-stat"><dt>Successful calls</dt><dd id="formatting-successful">Not available</dd><p>Completed formatting calls.</p></div>
+          <div class="usage-stat"><dt>Failed calls</dt><dd id="formatting-failed">Not available</dd><p>Failed formatting attempts.</p></div>
+          <div class="usage-stat"><dt>Measured input tokens</dt><dd id="formatting-input-tokens">Not available</dd><p>Reported by the text-model provider.</p></div>
+          <div class="usage-stat"><dt>Measured output tokens</dt><dd id="formatting-output-tokens">Not available</dd><p>Reported by the text-model provider.</p></div>
+          <div class="usage-stat usage-stat-featured"><dt>Measured total tokens</dt><dd id="formatting-total-tokens">Not available</dd><p>Provider-reported formatting tokens only, never added to audio quota.</p></div>
+          <div class="usage-stat"><dt>Successful calls without token usage</dt><dd id="formatting-unreported">Not available</dd><p>Unreported tokens are not counted as measured zero. Token totals may cover fewer calls than successful calls.</p></div>
+        </dl>
+        <p class="usage-last">Formatting tracking since: <span id="formatting-tracking-since">Not available</span> · UTC. No backfill; not your account’s lifetime usage.</p>
+        <p id="formatting-storage-status" class="usage-storage" aria-live="polite">Not available</p>
+      </section>
+      <div class="usage-feedback"><p id="usage-status" aria-live="polite" role="status">Loading usage…</p><p id="usage-error" class="error" role="alert" hidden></p></div>
+      <section class="usage-history" aria-labelledby="history-title">
+        <h2 id="history-title">The last 30 days</h2>
+        <p class="usage-explainer">Daily activity, newest first. Zero means measured zero; a dash means no successful processing time to measure.</p>
+        <div class="usage-table-scroll" role="region" aria-label="Daily usage table, scroll horizontally for more columns" tabindex="0">
+          <table class="usage-table">
+            <caption>Daily server activity · UTC</caption>
+            <thead><tr><th scope="col">Date</th><th scope="col">Requests</th><th scope="col">Successes</th><th scope="col">Errors</th><th scope="col">Calls</th><th scope="col">Submitted audio</th><th scope="col">Successful audio</th><th scope="col">Avg processing</th><th scope="col">Max processing</th></tr></thead>
+            <tbody id="usage-days"></tbody>
+          </table>
+        </div>
+        <p id="days-empty" class="usage-empty" hidden>No requests in the last 30 days. Usage before tracking began is not available.</p>
+      </section>
+      <section class="usage-provenance" aria-labelledby="tracking-title">
+        <h2 id="tracking-title">What these numbers cover</h2>
+        <dl><div><dt>Tracking since</dt><dd id="tracking-since">Loading…</dd></div><div><dt>Timezone</dt><dd id="timezone">UTC</dd></div><div><dt>Metadata retention</dt><dd id="retention-days">—</dd></div></dl>
+        <p>No backfill: usage before tracking began is not available. All time means the totals recorded by this server since tracking began, not your account’s lifetime usage.</p>
+        <p>Tiny usage metadata only: counts, durations and timestamps. No audio or transcripts are stored in this usage log. Audio is still sent to OpenAI for transcription; this log does not control provider retention.</p>
+        <p id="storage-status" class="usage-storage">Checking storage…</p>
+      </section>
+      <noscript><p class="notice">JavaScript is required to load usage metrics. No usage values have been loaded.</p></noscript>
+    </main>
+    <footer><span>A little clarity. No guesswork.</span><span>VOICEPAD / USAGE</span></footer>
+  </div>
+</body>
+</html>

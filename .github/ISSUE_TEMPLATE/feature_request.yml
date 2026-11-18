@@ -1,0 +1,47 @@
+name: Feature request
+description: Suggest a focused improvement to Voicepad.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Voicepad is a personal self-hosted dictation tool, not a multi-tenant hosted service.
+        Keep examples nonsensitive. For security issues, follow [SECURITY.md](https://github.com/Souptik2001/voicepad/blob/main/SECURITY.md).
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and what gets in the way?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Web recorder
+        - Mac client
+        - Profiles and formatting
+        - Self-hosting and administration
+        - Usage metrics
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain a concrete result, including privacy or access-control implications where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Current workarounds or simpler ways to solve the problem.
+  - type: textarea
+    id: verification
+    attributes:
+      label: How would you verify it?
+      description: Useful acceptance checks and relevant platforms. Do not include credentials, private server URLs, audio, or transcripts.

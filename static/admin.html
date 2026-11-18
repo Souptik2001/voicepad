@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <title>Voicepad — Administration</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./admin.mjs"></script>
+</head>
+<body>
+  <div class="shell admin-shell">
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Voicepad home"><span class="brand-mark" aria-hidden="true">v.</span>Voicepad</a>
+      <nav class="masthead-links" aria-label="Main navigation"><a class="badge admin-link" href="./profiles">Profiles</a><a class="badge admin-link" href="./usage">Usage</a><a class="badge admin-link" href="./">Back to your words <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">YOUR ACCOUNT. YOUR WORDS.</p>
+        <h1 id="title">A little <em>administration.</em></h1>
+        <p class="subtitle">Connect your own Codex account.<br>Voicepad signs in independently of Hermes.</p>
+      </section>
+      <p class="notice tailnet-note"><strong>Private Tailnet only.</strong> Any permitted Tailnet peer reaching this service can use transcription and Administration, including changing the connected account. There is no access key or separate app login. Do not expose this service to the public internet.</p>
+      <section class="admin-panel" aria-labelledby="connection-title">
+        <div class="panel-top"><h2 id="connection-title">Your Codex connection</h2><span id="auth-state" class="badge" role="status">Checking…</span></div>
+        <div class="admin-content">
+          <p id="login-state" role="status" aria-live="polite">Checking your connection…</p>
+          <div class="admin-actions">
+            <button id="connect" class="button dark" type="button" disabled>Connect Codex</button>
+            <button id="refresh" class="button quiet" type="button" disabled>Test token refresh</button>
+            <button id="disconnect" class="text-button" type="button" disabled>Disconnect locally</button>
+            <button id="cancel-login" class="button quiet" type="button" hidden>Cancel sign-in</button>
+          </div>
+          <section id="login-code-panel" class="device-login" aria-labelledby="device-title" hidden>
+            <h3 id="device-title">Finish sign-in on OpenAI</h3>
+            <p>Use only the code from a sign-in <strong>you explicitly started here</strong>. Never enter a code sent by someone else.</p>
+            <p><a id="verification-link" class="official-link" href="https://auth.openai.com/codex/device" target="_blank" rel="noopener noreferrer">Open auth.openai.com/codex/device <span aria-hidden="true">↗</span></a></p>
+            <p>Enter this code on the official OpenAI site:</p>
+            <output id="user-code" class="device-code" aria-label="OpenAI device sign-in code"></output>
+            <p class="device-expiry">Code expires: <span id="login-expires">Not reported</span></p>
+            <p>Voicepad checks for completion automatically. Enter passwords and verification codes only on OpenAI’s official site, never in Voicepad. Do not paste tokens here.</p>
+          </section>
+          <p id="admin-error" class="error" role="alert" hidden></p>
+          <dl class="admin-details">
+            <div><dt>Automatic refresh</dt><dd id="auto-refresh">Not checked yet</dd></div>
+            <div><dt>Credential expiry</dt><dd id="credential-expiry">Not reported</dd></div>
+            <div><dt>Last refresh</dt><dd id="last-refresh">Not refreshed yet</dd></div>
+            <div><dt>Next refresh retry</dt><dd id="refresh-retry">Not scheduled</dd></div>
+            <div class="detail-wide"><dt>Last refresh error</dt><dd id="last-error">None</dd></div>
+          </dl>
+        </div>
+      </section>
+      <div class="admin-notes disclosures">
+        <p><strong>Refresh is automatic while connected.</strong> “Test token refresh” exercises the same refresh path now. Expired, revoked, or rejected credentials may require a new sign-in; automatic refresh cannot guarantee renewal.</p>
+        <p>Disconnect removes Voicepad’s grant locally. It does not revoke access provider-wide or sign other applications out. No tokens or account identifiers are shown in this screen.</p>
+        <p>This is an experimental internal Codex dictation path, not a supported public transcription API. Audio is sent to OpenAI. The provider reported a 30-day audio asset TTL, not guaranteed deletion. Quota is not reported. No server transcript history is kept.</p>
+      </div>
+      <noscript><p class="notice">JavaScript is required to manage the Codex connection.</p></noscript>
+    </main>
+    <footer><span>A connection, with a little care.</span><span>VOICEPAD / ADMINISTRATION</span></footer>
+  </div>
+</body>
+</html>

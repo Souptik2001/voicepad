@@ -1,0 +1,11 @@
+# Only application runtime sources enter the image.
+**
+!requirements.txt
+!app.py
+!oauth.py
+!metrics.py
+!profiles.py
+!formatter.py
+!formatting_metrics.py
+!static/
+!static/**

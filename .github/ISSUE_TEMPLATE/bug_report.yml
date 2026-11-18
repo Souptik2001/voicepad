@@ -1,0 +1,53 @@
+name: Bug report
+description: Report a reproducible problem with Voicepad.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For vulnerabilities, follow [SECURITY.md](https://github.com/Souptik2001/voicepad/blob/main/SECURITY.md) instead of this public form.
+        Do not include tokens, device codes, account identifiers, private hostnames, recordings, or transcript text. Redact logs and screenshots.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before submitting
+      options:
+        - label: This is not a vulnerability disclosure, and I have removed sensitive information.
+          required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Revision/version, server OS, Docker/Compose or Python versions, and browser or macOS/client version as applicable. Describe the network setup without private addresses.
+      placeholder: "Revision: …; server: …; client/browser: …; access: loopback or private HTTPS"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Use a nonsensitive sample. Include whether a custom profile is involved, without private instructions.
+      placeholder: |
+        1. Open …
+        2. Choose …
+        3. Observe …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the sanitized error code/message. Distinguish provider failures from local capture, routing, or decode failures where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence and checks
+      description: Relevant logs/screenshots and tests tried. Review all content before posting; never attach .env, oauth.json, state backups, or real private audio/transcripts.

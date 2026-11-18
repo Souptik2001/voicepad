@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <title>Voicepad — Profiles</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./profiles.mjs"></script>
+</head>
+<body>
+  <div class="shell profiles-shell">
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Voicepad home"><span class="brand-mark" aria-hidden="true">v.</span>Voicepad</a>
+      <nav class="masthead-links" aria-label="Main navigation"><a class="badge admin-link" href="./">Your words</a><a class="badge admin-link" href="./usage">Usage</a><a class="badge admin-link" href="./admin">Administration</a></nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">YOUR WORDS. A LITTLE DIRECTION.</p>
+        <h1 id="title">A voice for <em>every occasion.</em></h1>
+        <p class="subtitle">Nine numbered places for your preferences.<br>Name a profile, then tell it how to shape your words.</p>
+      </section>
+      <p class="notice tailnet-note"><strong>Private Tailnet only.</strong> Any permitted Tailnet peer reaching this service can read, change or delete these shared profiles. No access key or separate app login. Do not expose this service to the public internet.</p>
+      <div class="profiles-workspace">
+        <section class="profiles-library" aria-labelledby="slots-title">
+          <div class="profiles-library-heading"><h2 id="slots-title">Your nine slots</h2><p>Choose an empty slot to create a profile. Slot numbers stay fixed.</p></div>
+          <div id="profile-slots" class="profile-slots" role="group" aria-label="Profile slots 1 through 9"></div>
+          <p class="profiles-library-note">A name can stand on its own. Instructions are optional.</p>
+        </section>
+        <section class="profile-editor" aria-labelledby="profile-editor-title">
+          <div class="profile-editor-heading"><h2 id="profile-editor-title">Slot 01</h2><span class="badge">PROFILE PREFERENCES</span></div>
+          <form id="profile-form" novalidate>
+            <label for="profile-name">Profile name</label>
+            <input id="profile-name" type="text" autocomplete="off" placeholder="e.g. Official" aria-describedby="profile-name-hint profile-counts" disabled>
+            <p id="profile-name-hint" class="profile-field-hint">1–60 characters. Leading and trailing spaces are removed.</p>
+            <label for="profile-instructions">Instructions <span class="profile-optional">optional</span></label>
+            <textarea id="profile-instructions" rows="9" placeholder="e.g. Use a professional tone. Keep names and details intact." aria-describedby="profile-instructions-hint profile-counts profile-mode" disabled></textarea>
+            <p id="profile-instructions-hint" class="profile-field-hint">Up to 4000 characters. Leave empty for raw transcription.</p>
+            <p id="profile-counts" class="profile-counts">Name 0 / 60 · Instructions 0 / 4000</p>
+            <p id="profile-mode" class="profile-mode">Raw transcription · no extra text-model request.</p>
+            <div class="profile-actions"><button id="profile-save" class="button dark" type="submit" disabled>Save profile</button><button id="profile-delete" class="text-button profile-danger" type="button" disabled>Delete profile</button></div>
+            <div id="profile-delete-prompt" class="profile-delete-prompt" role="group" aria-label="Confirm profile deletion" hidden>
+              <p>Delete this saved profile and its draft? This clears the slot for reuse. It cannot be undone.</p>
+              <div class="profile-actions"><button id="profile-delete-confirm" class="button quiet profile-danger" type="button">Yes, delete profile</button><button id="profile-delete-cancel" class="button quiet" type="button">Keep profile</button></div>
+            </div>
+          </form>
+        </section>
+      </div>
+      <div class="profiles-feedback"><div><p id="profiles-status" role="status" aria-live="polite">Loading profiles…</p><p id="profiles-error" class="error" role="alert" hidden></p></div><button id="profiles-refresh" class="button quiet" type="button">Refresh profiles</button></div>
+      <div class="admin-notes disclosures">
+        <p><strong>Formatting is a separate step.</strong> When a client uses a profile with instructions, formatting makes an extra Codex text-model request, adds latency and consumes model quota. It can rewrite your words; review the result. Empty instructions keep the same raw transcription with no extra text-model request.</p>
+        <p>Only profile names and instructions are saved on this server; no audio or transcripts are saved here. These preferences are shared, so avoid storing secrets in them.</p>
+        <p>Unsaved drafts stay on this page when you switch slots, refresh profiles or a request fails. Drafts are not stored and are lost when you reload or leave this page. A failed request may still have reached the server; refresh to check before retrying.</p>
+      </div>
+      <noscript><p class="notice">JavaScript is required to load and manage profiles.</p></noscript>
+    </main>
+    <footer><span>Your words, with a little direction.</span><span>VOICEPAD / PROFILES</span></footer>
+  </div>
+</body>
+</html>

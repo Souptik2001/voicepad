@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key><string>dev.voicepad.mac</string>
+    <key>CFBundleName</key><string>Voicepad</string>
+    <key>CFBundleDisplayName</key><string>Voicepad</string>
+    <key>CFBundleExecutable</key><string>Voicepad</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>0.6.2</string>
+    <key>CFBundleVersion</key><string>15</string>
+    <key>VoicepadServerURL</key><string>http://localhost:8791/</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key><true/>
+    </dict>
+    <key>LSMinimumSystemVersion</key><string>13.0</string>
+    <key>LSUIElement</key><true/>
+    <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSMicrophoneUsageDescription</key><string>Voicepad records your microphone only when you start a recording, then sends the audio to your private Voicepad service for transcription.</string>
+</dict>
+</plist>
